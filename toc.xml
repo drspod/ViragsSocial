@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Addon Author="Virag" APIVersion="9" Name="ViragsSocial" Description="Redesigg and impove Social interface" Version="">
+    <Script Name="ViragsSocial.lua"/>
+    <Script Name="ViragsSocialArrays.lua"/>
+    <Script Name="ViragsSocialNet.lua"/>
+    <Script Name="ViragsSocialCarbineFixes.lua"/>
+    <Script Name="ViragsSocialUI.lua"/>
+    <Script Name="ViragsSocialUtils.lua"/>
+    <Script Name="ViragsSocialGuildRanksDefault.lua"/>
+    <Script Name="ViragsSocialSettings.lua"/>
+    <Script Name="ViragsSocialScanner.lua"/>
+    <Script Name="ViragsSocialWho.lua"/>
+    <Script Name="ViragsSocialGroup.lua"/>
+    <Script Name="ViragsSocialNotifications.lua"/>
+    <Script Name="ViragsSocialGlobalChat.lua"/>
+    <Script Name="ViragsSocialTabListView.lua"/>
+    <Form Name="ViragsSocial.xml"/>
+
+    <!--
+    <Script Name="ViragsSoundPickerLib/ViragsSoundPicker.lua"/>
+    <Form Name="ViragsSoundPickerLib/ViragsSoundPicker.xml"/>
+    -->
+    <ReplaceAddon Name="Circles"/>
+    <ReplaceAddon Name="GuildAlerts"/>
+    <ReplaceAddon Name="FriendsList"/>
+    <ReplaceAddon Name="Guild"/>
+    <ReplaceAddon Name="GuildContentInfo"/>
+    <ReplaceAddon Name="GuildContentRoster"/>
+    <ReplaceAddon Name="SocialPanel"/>
+    <ReplaceAddon Name="Who"/>
+</Addon>
