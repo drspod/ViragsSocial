@@ -1,7 +1,12 @@
+require "ICCommLib"
+require "ICComm"
+require "ApolloTimer"
+
 -----------------------------------------------------------------------------------------------
 -- ViragsSocial Broadcasting
 -----------------------------------------------------------------------------------------------
 local ViragsSocial = Apollo.GetAddon("ViragsSocial")
+local JSON = Apollo.GetPackage("Lib:dkJSON-2.5").tPackage
 local List = {}
 
 ViragsSocial.ICCommLib_PROTOCOL_VERSION = 0.001
@@ -30,11 +35,23 @@ function ViragsSocial:JoinICCommLibChannels()
 
             if self.InfoChannels[guildName] == nil then
                 self.DEBUG("Join " .. chanelName)
-                self.InfoChannels[guildName] = ICCommLib.JoinChannel(chanelName, "OnBroadcastReceived", self)
+                self.InfoChannels[guildName] = ICCommLib.JoinChannel(chanelName, ICCommLib.CodeEnumICCommChannelType.Group) --"OnBroadcastReceived", self)
+                self.channelTimer = ApolloTimer.Create(1, true, "SetICCommCallback", self)
             end
         end
     end
 end
+
+function ViragsSocial:SetICCommCallback()
+    if not self.channel then
+        self.channel = ICCommLib.JoinChannel("ViragSocial", ICCommLib.CodeEnumICCommChannelType.Group)
+    end
+    if self.channel:IsReady() then
+        self.channel:SetReceivedMessageFunction("OnBroadcastReceived", self)
+        self.channelTimer = nil
+    end
+end
+
 
 --SEND MSG_CODES["UPDATE_FOR_ALL"] 
 function ViragsSocial:BroadcastUpdate()
@@ -142,14 +159,14 @@ function ViragsSocial:Broadcast(chanell, msg, code, target)
         msg.target = target
         msg.MSG_CODE = code
 
-        chanell:SendMessage(msg)
+        chanell:SendMessage(JSON.encode(msg))
 
     end
 end
 
 --RECEIVE
-function ViragsSocial:OnBroadcastReceived(chanell, msg)
-
+function ViragsSocial:OnBroadcastReceived(chanell, msg_encoded)
+    local msg = JSON.decode(msg_encoded)
 
     if msg == nil or msg.name == nil or type(msg) ~= "table" then return end
 
